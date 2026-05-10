@@ -1,0 +1,17 @@
+{
+  "name": "financial-portal",
+  "version": "1.0.0",
+  "description": "Financial information and quotes website with real-time market data",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lightweight-charts": "^4.1.3"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

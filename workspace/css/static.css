@@ -1,0 +1,47 @@
+/* Static Pages (Privacy, About) */
+
+.static-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.static-page h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.static-page h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 32px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.static-page p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.static-page ul {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.static-page li {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 6px;
+  list-style: disc;
+}
+
+.static-page .last-updated {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}

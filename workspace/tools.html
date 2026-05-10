@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交易工具 - FinView | 盈亏计算器 汇率换算 交易时段</title>
+  <meta name="description" content="交易实用工具集合：盈亏点位计算器、多币种汇率换算器、全球交易时段倒计时。">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/tools.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo"><div class="logo-icon">FV</div><span>FinView</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link" data-page="home">首页</a>
+        <a href="/quotes.html" class="nav-link" data-page="quotes">行情</a>
+        <a href="/news.html" class="nav-link" data-page="news">新闻</a>
+        <a href="/calendar.html" class="nav-link" data-page="calendar">财经日历</a>
+        <a href="/tools.html" class="nav-link active" data-page="tools">交易工具</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Switch theme">☽</button>
+        <button class="mobile-menu-btn" aria-label="Open menu"><div class="hamburger"><span></span><span></span><span></span></div></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <div class="mobile-nav-links">
+        <a href="/" class="nav-link">首页</a>
+        <a href="/quotes.html" class="nav-link">行情</a>
+        <a href="/news.html" class="nav-link">新闻</a>
+        <a href="/calendar.html" class="nav-link">财经日历</a>
+        <a href="/tools.html" class="nav-link active">交易工具</a>
+        <a href="/about.html" class="nav-link">关于我们</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">交易工具</h1>
+        <p class="page-description">专业交易辅助工具，助力精准决策</p>
+      </div>
+
+      <!-- Tool Sections -->
+      <div class="tools-layout">
+        <!-- P/L Calculator -->
+        <section class="tool-section" id="calculator">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">📊 交易盈亏计算器</h2>
+            </div>
+            <div class="calc-form">
+              <div class="form-group">
+                <label class="form-label">交易品种</label>
+                <select class="form-select" id="calcInstrument">
+                  <optgroup label="外汇">
+                    <option value="EURUSD" data-pip="0.0001" data-size="100000">EUR/USD 欧元/美元</option>
+                    <option value="GBPUSD" data-pip="0.0001" data-size="100000">GBP/USD 英镑/美元</option>
+                    <option value="USDJPY" data-pip="0.01" data-size="100000">USD/JPY 美元/日元</option>
+                    <option value="USDCHF" data-pip="0.0001" data-size="100000">USD/CHF 美元/瑞郎</option>
+                    <option value="AUDUSD" data-pip="0.0001" data-size="100000">AUD/USD 澳元/美元</option>
+                  </optgroup>
+                  <optgroup label="贵金属">
+                    <option value="XAUUSD" data-pip="0.01" data-size="100">XAU/USD 黄金</option>
+                    <option value="XAGUSD" data-pip="0.001" data-size="5000">XAG/USD 白银</option>
+                  </optgroup>
+                  <optgroup label="能源">
+                    <option value="WTI" data-pip="0.01" data-size="1000">WTI 美原油</option>
+                    <option value="BRENT" data-pip="0.01" data-size="1000">BRENT 布伦特原油</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="calc-row">
+                <div class="form-group">
+                  <label class="form-label">交易手数 (Lots)</label>
+                  <input type="number" class="form-input" id="calcLots" value="1" min="0.01" step="0.01">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">止损点数 (Pips)</label>
+                  <input type="number" class="form-input" id="calcSL" value="50" min="1" step="1">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">止盈点数 (Pips)</label>
+                  <input type="number" class="form-input" id="calcTP" value="100" min="1" step="1">
+                </div>
+              </div>
+              <button class="btn btn-primary" id="calcBtn" style="width:100%;">计算盈亏</button>
+              <div class="result-box" id="calcResult" style="display:none;">
+                <!-- Filled by JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Currency Converter -->
+        <section class="tool-section" id="converter">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">💱 多币种汇率换算器</h2>
+            </div>
+            <div class="converter-form">
+              <div class="converter-inputs">
+                <div class="form-group">
+                  <label class="form-label">金额</label>
+                  <input type="number" class="form-input" id="convAmount" value="1000" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">从</label>
+                  <select class="form-select" id="convFrom">
+                    <option value="USD">USD 美元</option>
+                    <option value="EUR">EUR 欧元</option>
+                    <option value="GBP">GBP 英镑</option>
+                    <option value="JPY">JPY 日元</option>
+                    <option value="CHF">CHF 瑞郎</option>
+                    <option value="AUD">AUD 澳元</option>
+                    <option value="NZD">NZD 纽元</option>
+                    <option value="CAD">CAD 加元</option>
+                    <option value="CNY">CNY 人民币</option>
+                  </select>
+                </div>
+                <div class="swap-btn" id="swapBtn" title="互换">⇄</div>
+                <div class="form-group">
+                  <label class="form-label">到</label>
+                  <select class="form-select" id="convTo">
+                    <option value="CNY">CNY 人民币</option>
+                    <option value="USD">USD 美元</option>
+                    <option value="EUR">EUR 欧元</option>
+                    <option value="GBP">GBP 英镑</option>
+                    <option value="JPY">JPY 日元</option>
+                    <option value="CHF">CHF 瑞郎</option>
+                    <option value="AUD">AUD 澳元</option>
+                    <option value="NZD">NZD 纽元</option>
+                    <option value="CAD">CAD 加元</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="convBtn" style="width:100%;">换算</button>
+              <div class="result-box" id="convResult" style="display:none;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Trading Sessions -->
+        <section class="tool-section" id="sessions">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">🕐 全球交易时段</h2>
+            </div>
+            <div class="sessions-grid-full" id="sessionsGridFull">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 FinView. All rights reserved.</p>
+        <p>市场数据仅供参考，不构成投资建议。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { init as initTheme } from '/js/theme.js';
+    import { initMobileMenu, setActiveNav } from '/js/utils.js';
+    import { fetchAllPrices, INSTRUMENTS } from '/js/api.js';
+
+    initTheme();
+    initMobileMenu();
+    setActiveNav('tools');
+
+    // Store exchange rates
+    let exchangeRates = {};
+
+    // Load exchange rates
+    async function loadRates() {
+      const data = await fetchAllPrices();
+      // Get USD rates from forex
+      exchangeRates = { USD: 1 };
+      if (data['EURUSD']) exchangeRates['EUR'] = data['EURUSD'];
+      if (data['GBPUSD']) exchangeRates['GBP'] = data['GBPUSD'];
+      if (data['USDJPY']) exchangeRates['JPY'] = 1 / data['USDJPY'];
+      if (data['USDCHF']) exchangeRates['CHF'] = 1 / data['USDCHF'];
+      if (data['AUDUSD']) exchangeRates['AUD'] = data['AUDUSD'];
+      if (data['NZDUSD']) exchangeRates['NZD'] = data['NZDUSD'];
+      if (data['USDCAD']) exchangeRates['CAD'] = 1 / data['USDCAD'];
+      exchangeRates['CNY'] = 7.24; // Approximate, fixed rate
+    }
+
+    // P/L Calculator
+    document.getElementById('calcBtn').addEventListener('click', calculatePL);
+
+    function calculatePL() {
+      const select = document.getElementById('calcInstrument');
+      const option = select.options[select.selectedIndex];
+      const pipSize = parseFloat(option.dataset.pip);
+      const contractSize = parseFloat(option.dataset.size);
+      const lots = parseFloat(document.getElementById('calcLots').value) || 1;
+      const slPips = parseFloat(document.getElementById('calcSL').value) || 0;
+      const tpPips = parseFloat(document.getElementById('calcTP').value) || 0;
+
+      const pipValue = pipSize * contractSize * lots;
+      const slAmount = slPips * pipValue;
+      const tpAmount = tpPips * pipValue;
+      const riskReward = slPips > 0 ? (tpPips / slPips).toFixed(2) : '-';
+
+      document.getElementById('calcResult').style.display = 'block';
+      document.getElementById('calcResult').innerHTML = `
+        <div class="result-row"><span class="result-label">每点价值</span><span class="result-value">${pipValue.toFixed(2)} USD</span></div>
+        <div class="result-row"><span class="result-label">止损金额 (${slPips} 点)</span><span class="result-value text-danger">${slAmount.toFixed(2)} USD</span></div>
+        <div class="result-row"><span class="result-label">止盈金额 (${tpPips} 点)</span><span class="result-value text-success">${tpAmount.toFixed(2)} USD</span></div>
+        <div class="result-row"><span class="result-label">盈亏比</span><span class="result-value">1 : ${riskReward}</span></div>
+      `;
+    }
+
+    // Currency Converter
+    document.getElementById('swapBtn').addEventListener('click', () => {
+      const from = document.getElementById('convFrom');
+      const to = document.getElementById('convTo');
+      const temp = from.value;
+      from.value = to.value;
+      to.value = temp;
+      convertCurrency();
+    });
+
+    document.getElementById('convBtn').addEventListener('click', convertCurrency);
+
+    async function convertCurrency() {
+      await loadRates();
+      const amount = parseFloat(document.getElementById('convAmount').value) || 0;
+      const from = document.getElementById('convFrom').value;
+      const to = document.getElementById('convTo').value;
+
+      const fromUSD = exchangeRates[from] ? amount / exchangeRates[from] : 0;
+      const result = fromUSD * (exchangeRates[to] || 0);
+      const rate = fromUSD ? (exchangeRates[to] / exchangeRates[from]) : 0;
+
+      document.getElementById('convResult').style.display = 'block';
+      document.getElementById('convResult').innerHTML = `
+        <div class="result-row"><span class="result-label">汇率</span><span class="result-value">1 ${from} = ${rate.toFixed(6)} ${to}</span></div>
+        <div class="result-row"><span class="result-label">${amount} ${from} =</span><span class="result-value">${result.toFixed(2)} ${to}</span></div>
+      `;
+    }
+
+    // Trading Sessions
+    function renderSessions() {
+      const container = document.getElementById('sessionsGridFull');
+      const sessions = [
+        { name: '亚盘 (东京)', icon: '🌏', open: '07:00', close: '16:00', openUTC: 22, closeUTC: 7, desc: '东京、悉尼市场', timezone: 'Asia/Tokyo' },
+        { name: '欧盘 (伦敦)', icon: '🌍', open: '08:00', close: '17:00', openUTC: 0, closeUTC: 9, desc: '伦敦、法兰克福市场', timezone: 'Europe/London' },
+        { name: '美盘 (纽约)', icon: '🌎', open: '09:30', close: '22:00', openUTC: 13, closeUTC: 22, desc: '纽约市场', timezone: 'America/New_York' },
+      ];
+
+      container.innerHTML = sessions.map(s => `
+        <div class="session-card" id="session-${s.name.slice(0,2)}">
+          <div style="font-size:2rem;margin-bottom:8px;">${s.icon}</div>
+          <div class="session-name">${s.name}</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">${s.desc}</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">${s.open} - ${s.close} (UTC)</div>
+          <div class="session-status" id="status-${s.name.slice(0,2)}">加载中</div>
+          <div class="session-timer" id="timer-${s.name.slice(0,2)}">--:--:--</div>
+          <div class="session-timer-label" id="label-${s.name.slice(0,2)}"></div>
+        </div>
+      `).join('');
+
+      function updateTimers() {
+        const now = new Date();
+        const utcH = now.getUTCHours();
+        const utcM = now.getUTCMinutes();
+        const utcS = now.getUTCSeconds();
+        const utcNow = utcH * 3600 + utcM * 60 + utcS;
+
+        sessions.forEach(s => {
+          const id = s.name.slice(0, 2);
+          const statusEl = document.getElementById(`status-${id}`);
+          const timerEl = document.getElementById(`timer-${id}`);
+          const labelEl = document.getElementById(`label-${id}`);
+          const card = document.getElementById(`session-${id}`);
+
+          const openSec = s.openUTC * 3600;
+          const closeSec = s.closeUTC * 3600;
+          const isOpen = s.closeUTC > s.openUTC
+            ? utcNow >= openSec && utcNow < closeSec
+            : utcNow >= openSec || utcNow < closeSec;
+
+          statusEl.className = `session-status ${isOpen ? 'open' : 'closed'}`;
+          statusEl.textContent = isOpen ? '交易中' : '已休市';
+          card.className = `session-card ${isOpen ? 'active' : ''}`;
+
+          if (isOpen) {
+            const diff = closeSec - utcNow;
+            timerEl.textContent = formatSec(diff);
+            labelEl.textContent = '距收盘';
+          } else {
+            let nextOpen = openSec;
+            if (s.closeUTC > s.openUTC && utcNow >= closeSec) {
+              nextOpen = openSec + 86400;
+            } else if (s.closeUTC <= s.openUTC && utcNow >= closeSec && utcNow < openSec) {
+              nextOpen = openSec;
+            } else {
+              nextOpen = openSec + 86400;
+            }
+            const diff = nextOpen - utcNow;
+            timerEl.textContent = formatSec(diff % 86400);
+            labelEl.textContent = '距开盘';
+          }
+        });
+      }
+
+      function formatSec(s) {
+        if (s < 0) s += 86400;
+        const h = Math.floor(s / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        const sec = s % 60;
+        return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+      }
+
+      updateTimers();
+      setInterval(updateTimers, 1000);
+    }
+
+    // Initialize
+    loadRates();
+    renderSessions();
+  </script>
+</body>
+</html>

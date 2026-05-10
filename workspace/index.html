@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinView - 全球金融市场实时行情 | 外汇 贵金属 原油 数字货币</title>
+  <meta name="description" content="FinView提供全球外汇、贵金属、能源、加密货币实时行情报价，专业财经日历，全球财经新闻，以及交易盈亏计算器、汇率换算等实用工具。">
+  <meta name="keywords" content="外汇行情,黄金价格,原油价格,比特币行情,财经日历,财经新闻,交易工具">
+  <meta property="og:title" content="FinView - 全球金融市场实时行情">
+  <meta property="og:description" content="外汇、贵金属、能源、数字货币实时行情与专业交易工具">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/homepage.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo">
+        <div class="logo-icon">FV</div>
+        <span>FinView</span>
+      </a>
+
+      <nav class="main-nav">
+        <a href="/" class="nav-link" data-page="home">首页</a>
+        <a href="/quotes.html" class="nav-link" data-page="quotes">行情</a>
+        <a href="/news.html" class="nav-link" data-page="news">新闻</a>
+        <a href="/calendar.html" class="nav-link" data-page="calendar">财经日历</a>
+        <a href="/tools.html" class="nav-link" data-page="tools">交易工具</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Switch theme">☽</button>
+        <button class="mobile-menu-btn" aria-label="Open menu">
+          <div class="hamburger"><span></span><span></span><span></span></div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <div class="mobile-nav-links">
+        <a href="/" class="nav-link active" data-page="home">首页</a>
+        <a href="/quotes.html" class="nav-link" data-page="quotes">行情</a>
+        <a href="/news.html" class="nav-link" data-page="news">新闻</a>
+        <a href="/calendar.html" class="nav-link" data-page="calendar">财经日历</a>
+        <a href="/tools.html" class="nav-link" data-page="tools">交易工具</a>
+        <a href="/about.html" class="nav-link" data-page="about">关于我们</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Ticker Bar -->
+  <div class="ticker-bar">
+    <div class="ticker-content" id="tickerContent">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Hero Section with Sessions -->
+      <section class="section">
+        <div class="hero-grid">
+          <div class="hero-info">
+            <h1 class="hero-title">全球金融市场实时行情</h1>
+            <p class="hero-desc">外汇 · 贵金属 · 能源 · 加密货币 — 一站式行情资讯与交易工具</p>
+            <div class="hero-actions">
+              <a href="/quotes.html" class="btn btn-primary">查看行情</a>
+              <a href="/tools.html" class="btn btn-secondary">交易工具</a>
+            </div>
+          </div>
+          <div class="sessions-grid" id="sessionsGrid">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Ad Placeholder -->
+      <div class="ad-placeholder ad-banner">广告位 728x90</div>
+
+      <!-- Key Quotes -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">核心品种行情</h2>
+          <a href="/quotes.html" class="btn btn-secondary btn-sm">查看全部 →</a>
+        </div>
+        <div class="quote-grid" id="homeQuotes">
+          <!-- Filled by JS -->
+        </div>
+      </section>
+
+      <!-- Cross-Instrument Panel -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">跨品种联动对标</h2>
+        </div>
+        <div class="correlation-grid" id="correlationGrid">
+          <!-- Filled by JS -->
+        </div>
+      </section>
+
+      <!-- Two Column: News + Calendar -->
+      <div class="two-column">
+        <div class="column-main">
+          <!-- News -->
+          <section class="section">
+            <div class="section-header">
+              <h2 class="section-title">全球财经新闻</h2>
+              <a href="/news.html" class="btn btn-secondary btn-sm">更多新闻 →</a>
+            </div>
+            <div class="news-list" id="homeNews">
+              <!-- Filled by JS -->
+            </div>
+          </section>
+        </div>
+        <div class="column-side">
+          <!-- Calendar -->
+          <section class="section">
+            <div class="section-header">
+              <h2 class="section-title">今日财经日历</h2>
+              <a href="/calendar.html" class="btn btn-secondary btn-sm">完整日历 →</a>
+            </div>
+            <div id="homeCalendar">
+              <!-- Filled by JS -->
+            </div>
+          </section>
+
+          <!-- Ad Sidebar -->
+          <div class="ad-placeholder ad-sidebar">广告位 300x250</div>
+        </div>
+      </div>
+
+      <!-- Tools Entry -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">交易实用工具</h2>
+          <a href="/tools.html" class="btn btn-secondary btn-sm">全部工具 →</a>
+        </div>
+        <div class="tools-preview-grid">
+          <a href="/tools.html#calculator" class="tool-card">
+            <div class="tool-icon">📊</div>
+            <div class="tool-name">盈亏计算器</div>
+            <div class="tool-desc">输入手数和止损点数，自动计算盈亏金额</div>
+          </a>
+          <a href="/tools.html#converter" class="tool-card">
+            <div class="tool-icon">💱</div>
+            <div class="tool-name">汇率换算器</div>
+            <div class="tool-desc">多币种实时汇率换算，支持主流货币对</div>
+          </a>
+          <a href="/tools.html#sessions" class="tool-card">
+            <div class="tool-icon">🕐</div>
+            <div class="tool-name">交易时段</div>
+            <div class="tool-desc">全球三大交易时段倒计时，把握最佳交易时机</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="site-logo">
+            <div class="logo-icon">FV</div>
+            <span>FinView</span>
+          </a>
+          <p>专业金融市场行情资讯平台，提供外汇、贵金属、能源、加密货币实时报价与交易工具。</p>
+        </div>
+        <div>
+          <h3 class="footer-heading">行情</h3>
+          <div class="footer-links">
+            <a href="/quotes.html">全部行情</a>
+            <a href="/quotes.html?category=forex">外汇</a>
+            <a href="/quotes.html?category=metal">贵金属</a>
+            <a href="/quotes.html?category=energy">能源</a>
+            <a href="/quotes.html?category=crypto">数字货币</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer-heading">资讯</h3>
+          <div class="footer-links">
+            <a href="/news.html">财经新闻</a>
+            <a href="/calendar.html">财经日历</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer-heading">关于</h3>
+          <div class="footer-links">
+            <a href="/about.html">关于我们</a>
+            <a href="/privacy.html">隐私政策</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 FinView. All rights reserved.</p>
+        <p>市场数据仅供参考，不构成投资建议。</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { init as initTheme, toggle as toggleTheme } from '/js/theme.js';
+    import { initMobileMenu, setActiveNav, initThemeToggle } from '/js/utils.js';
+    import { fetchAllPrices, formatQuote, fetchNews, getEconomicCalendar, INSTRUMENTS } from '/js/api.js';
+    import { renderQuotes, updateQuotes, startAutoRefresh, getSymbolsByCategory } from '/js/quotes.js';
+    import { formatDate } from '/js/utils.js';
+
+    // Initialize
+    initTheme();
+    initMobileMenu();
+    setActiveNav('home');
+
+    // Key instruments for homepage
+    const keySymbols = ['EURUSD', 'GBPUSD', 'USDJPY', 'XAUUSD', 'XAGUSD', 'WTI', 'BTC', 'ETH'];
+
+    // Correlation instruments
+    const correlationSymbols = ['XAUUSD', 'XAGUSD', 'WTI', 'BTC'];
+
+    // Load data
+    async function loadHomepage() {
+      const priceData = await fetchAllPrices();
+
+      // Render key quotes
+      renderQuotes('homeQuotes', keySymbols, priceData);
+
+      // Render ticker
+      renderTicker(priceData);
+
+      // Render correlation panel
+      renderCorrelationPanel(priceData);
+
+      // Load news
+      const news = await fetchNews(5);
+      renderNewsList(news);
+
+      // Load calendar
+      const today = formatDate();
+      const events = getEconomicCalendar(today, today);
+      renderCalendarPreview(events);
+
+      // Render sessions
+      renderSessions();
+    }
+
+    function renderTicker(data) {
+      const container = document.getElementById('tickerContent');
+      if (!container) return;
+      const items = Object.entries(data).map(([symbol, price]) => {
+        const q = formatQuote(symbol, price);
+        if (!q) return '';
+        const color = q.change >= 0 ? 'var(--success)' : 'var(--danger)';
+        const sign = q.change >= 0 ? '+' : '';
+        return `<span class="ticker-item"><span class="ticker-symbol">${q.name}</span><span class="ticker-price">${q.price.toFixed(q.decimals)}</span><span style="color:${color}">${sign}${q.changePercent.toFixed(2)}%</span></span>`;
+      }).join('');
+      container.innerHTML = items + items; // Duplicate for seamless scroll
+    }
+
+    function renderCorrelationPanel(data) {
+      const container = document.getElementById('correlationGrid');
+      if (!container) return;
+      container.innerHTML = correlationSymbols.map(symbol => {
+        const q = formatQuote(symbol, data[symbol]);
+        if (!q) return '';
+        const changeClass = q.change >= 0 ? 'text-success' : 'text-danger';
+        const sign = q.change >= 0 ? '+' : '';
+        return `
+          <div class="corr-card">
+            <div class="corr-header">
+              <span class="category-badge ${q.category}">${q.category.toUpperCase()}</span>
+              <span class="corr-symbol">${q.name}</span>
+            </div>
+            <div class="corr-price">${q.price.toFixed(q.decimals)}</div>
+            <div class="corr-change ${changeClass}">${sign}${q.change.toFixed(q.decimals)} (${sign}${q.changePercent.toFixed(2)}%)</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderNewsList(news) {
+      const container = document.getElementById('homeNews');
+      if (!container || !news.length) return;
+      container.innerHTML = news.map(item => `
+        <a href="${item.url}" target="_blank" rel="noopener" class="news-card">
+          <div class="news-content">
+            <div class="news-title">${item.title}</div>
+            <div class="news-meta">
+              <span class="news-source">${item.source}</span>
+              <span>${item.publishedAt ? new Date(item.publishedAt).toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'}) : ''}</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function renderCalendarPreview(events) {
+      const container = document.getElementById('homeCalendar');
+      if (!container) return;
+      if (!events.length) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-text">今日暂无重要经济事件</div></div>';
+        return;
+      }
+      const highEvents = events.filter(e => e.importance >= 2).slice(0, 5);
+      container.innerHTML = `
+        <div class="calendar-preview">
+          ${highEvents.map(evt => `
+            <div class="cal-event">
+              <div class="cal-event-time">${evt.time}</div>
+              <div class="cal-event-info">
+                <div class="cal-event-country">${evt.countryCode}</div>
+                <div class="cal-event-name">${evt.event}</div>
+              </div>
+              <div class="cal-event-importance">
+                ${'<span class="star filled">★</span>'.repeat(evt.importance)}${'<span class="star">★</span>'.repeat(3 - evt.importance)}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function renderSessions() {
+      const container = document.getElementById('sessionsGrid');
+      if (!container) return;
+
+      const sessions = [
+        { name: '亚盘 (东京)', open: 0, close: 9, tz: 'Asia/Tokyo' },
+        { name: '欧盘 (伦敦)', open: 8, close: 17, tz: 'Europe/London' },
+        { name: '美盘 (纽约)', open: 13, close: 22, tz: 'America/New_York' },
+      ];
+
+      container.innerHTML = sessions.map(s => `
+        <div class="session-card" id="session-${s.name.slice(0,2)}">
+          <div class="session-name">${s.name}</div>
+          <div class="session-status" id="status-${s.name.slice(0,2)}">加载中</div>
+          <div class="session-timer" id="timer-${s.name.slice(0,2)}">--:--:--</div>
+          <div class="session-timer-label" id="label-${s.name.slice(0,2)}"></div>
+        </div>
+      `).join('');
+
+      // Update session timers
+      function updateSessionTimers() {
+        const now = new Date();
+        const utcHour = now.getUTCHours();
+
+        sessions.forEach(s => {
+          const id = s.name.slice(0, 2);
+          const statusEl = document.getElementById(`status-${id}`);
+          const timerEl = document.getElementById(`timer-${id}`);
+          const labelEl = document.getElementById(`label-${id}`);
+          const card = document.getElementById(`session-${id}`);
+
+          // Simple UTC-based check (approximate)
+          const isOpen = utcHour >= s.open && utcHour < s.close;
+          statusEl.className = `session-status ${isOpen ? 'open' : 'closed'}`;
+          statusEl.textContent = isOpen ? '交易中' : '已休市';
+          card.className = `session-card ${isOpen ? 'active' : ''}`;
+
+          if (isOpen) {
+            const closeTime = new Date(now);
+            closeTime.setUTCHours(s.close, 0, 0, 0);
+            const diff = closeTime - now;
+            timerEl.textContent = formatDuration(diff);
+            labelEl.textContent = '距收盘';
+          } else {
+            let openTime = new Date(now);
+            openTime.setUTCHours(s.open, 0, 0, 0);
+            if (openTime <= now) openTime.setUTCDate(openTime.getUTCDate() + 1);
+            const diff = openTime - now;
+            timerEl.textContent = formatDuration(diff);
+            labelEl.textContent = '距开盘';
+          }
+        });
+      }
+
+      function formatDuration(ms) {
+        if (ms < 0) return '00:00:00';
+        const h = Math.floor(ms / 3600000);
+        const m = Math.floor((ms % 3600000) / 60000);
+        const s = Math.floor((ms % 60000) / 1000);
+        return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+
+      updateSessionTimers();
+      setInterval(updateSessionTimers, 1000);
+    }
+
+    // Start
+    loadHomepage();
+    startAutoRefresh(30000);
+  </script>
+</body>
+</html>

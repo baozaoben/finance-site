@@ -1,0 +1,21 @@
+/* News Page Styles */
+
+.news-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.load-more {
+  text-align: center;
+  padding: 24px 0;
+}
+
+@media (max-width: 639px) {
+  .news-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+}

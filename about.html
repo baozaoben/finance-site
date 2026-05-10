@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们 - FinView</title>
+  <meta name="description" content="了解 FinView — 专业的全球金融市场行情资讯平台。">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/static.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo"><div class="logo-icon">FV</div><span>FinView</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link" data-page="home">首页</a>
+        <a href="/quotes.html" class="nav-link" data-page="quotes">行情</a>
+        <a href="/news.html" class="nav-link" data-page="news">新闻</a>
+        <a href="/calendar.html" class="nav-link" data-page="calendar">财经日历</a>
+        <a href="/tools.html" class="nav-link" data-page="tools">交易工具</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Switch theme">☽</button>
+        <button class="mobile-menu-btn" aria-label="Open menu"><div class="hamburger"><span></span><span></span><span></span></div></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <div class="mobile-nav-links">
+        <a href="/" class="nav-link">首页</a>
+        <a href="/quotes.html" class="nav-link">行情</a>
+        <a href="/news.html" class="nav-link">新闻</a>
+        <a href="/calendar.html" class="nav-link">财经日历</a>
+        <a href="/tools.html" class="nav-link">交易工具</a>
+        <a href="/about.html" class="nav-link active">关于我们</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+      <article class="static-page">
+        <h1>关于 FinView</h1>
+
+        <section>
+          <h2>我们的使命</h2>
+          <p>FinView 致力于为交易者提供一站式全球金融市场行情资讯服务。我们整合外汇、贵金属、能源和加密货币的实时报价，配合专业财经日历和实用交易工具，帮助您做出更明智的交易决策。</p>
+        </section>
+
+        <section>
+          <h2>核心功能</h2>
+          <ul>
+            <li><strong>实时行情</strong> — 覆盖主流外汇对、黄金白银、原油及加密货币，自动刷新报价</li>
+            <li><strong>K线图表</strong> — 多周期K线图与分时走势，支持1分钟至日线切换</li>
+            <li><strong>财经新闻</strong> — 聚合全球权威财经媒体资讯，实时更新</li>
+            <li><strong>财经日历</strong> — 全球经济数据日程，标注重要等级与前值/预测/公布值</li>
+            <li><strong>自选管理</strong> — 收藏关注的交易品种，随时查看</li>
+            <li><strong>交易工具</strong> — 盈亏计算器、汇率换算、交易时段倒计时</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>数据来源</h2>
+          <p>我们的市场数据来源于多个公开免费的 API 接口，包括 ExchangeRate API、CoinGecko API 等。所有数据仅供参考，不构成投资建议。行情数据可能存在延迟，交易请以交易所实时报价为准。</p>
+        </section>
+
+        <section>
+          <h2>技术架构</h2>
+          <p>FinView 是纯前端静态网站，无需后端服务器即可运行。采用现代化的 HTML5、CSS3 和原生 JavaScript 构建，支持深色/浅色主题切换，完美适配桌面端和移动端。</p>
+        </section>
+
+        <section>
+          <h2>联系我们</h2>
+          <p>如有任何问题或建议，欢迎通过以下方式联系我们：</p>
+          <ul>
+            <li>邮箱：contact@finview.example.com</li>
+            <li>工作时间：周一至周五 9:00 - 18:00 (UTC+8)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>免责声明</h2>
+          <p>本网站提供的所有信息、数据、工具仅供参考用途，不构成任何投资建议或交易推荐。金融市场存在风险，过往表现不代表未来结果。用户应基于自身独立判断做出投资决策，FinView 不对因使用本网站信息而产生的任何损失承担责任。</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 FinView. All rights reserved.</p>
+        <p>市场数据仅供参考，不构成投资建议。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { init as initTheme } from '/js/theme.js';
+    import { initMobileMenu } from '/js/utils.js';
+    initTheme();
+    initMobileMenu();
+  </script>
+</body>
+</html>

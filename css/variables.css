@@ -1,0 +1,119 @@
+/* CSS Custom Properties - Theme System */
+
+:root[data-theme="dark"] {
+  /* Primary colors - deep blue financial theme */
+  --primary-50: #e8edf5;
+  --primary-100: #c5d1e8;
+  --primary-200: #9fb3d9;
+  --primary-300: #7995ca;
+  --primary-400: #5d7ebe;
+  --primary-500: #1a3a5c;
+  --primary-600: #15304d;
+  --primary-700: #0f2440;
+  --primary-800: #0a1830;
+  --primary-900: #050c1a;
+
+  /* Background colors */
+  --bg-primary: #0a1830;
+  --bg-secondary: #0f2440;
+  --bg-tertiary: #15304d;
+  --bg-card: #0f2440;
+  --bg-card-hover: #15304d;
+  --bg-input: #0a1830;
+  --bg-modal: #0f2440;
+
+  /* Text colors */
+  --text-primary: #e8edf5;
+  --text-secondary: #9fb3d9;
+  --text-tertiary: #7995ca;
+  --text-muted: #5d7ebe;
+
+  /* Border colors */
+  --border-primary: #15304d;
+  --border-secondary: #1a3a5c;
+  --border-focus: #5d7ebe;
+
+  /* Status colors */
+  --success: #00c853;
+  --success-bg: rgba(0, 200, 83, 0.1);
+  --danger: #ff1744;
+  --danger-bg: rgba(255, 23, 68, 0.1);
+  --warning: #ffab00;
+  --warning-bg: rgba(255, 171, 0, 0.1);
+  --info: #2979ff;
+  --info-bg: rgba(41, 121, 255, 0.1);
+
+  /* Chart colors */
+  --chart-green: #00c853;
+  --chart-red: #ff1744;
+  --chart-green-bg: rgba(0, 200, 83, 0.3);
+  --chart-red-bg: rgba(255, 23, 68, 0.3);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  /* Scrollbar */
+  --scrollbar-track: #0a1830;
+  --scrollbar-thumb: #1a3a5c;
+}
+
+:root[data-theme="light"] {
+  /* Primary colors */
+  --primary-50: #f5f8fc;
+  --primary-100: #e8edf5;
+  --primary-200: #c5d1e8;
+  --primary-300: #9fb3d9;
+  --primary-400: #7995ca;
+  --primary-500: #1a3a5c;
+  --primary-600: #15304d;
+  --primary-700: #0f2440;
+  --primary-800: #0a1830;
+  --primary-900: #050c1a;
+
+  /* Background colors */
+  --bg-primary: #f5f8fc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8edf5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f8fc;
+  --bg-input: #ffffff;
+  --bg-modal: #ffffff;
+
+  /* Text colors */
+  --text-primary: #0f2440;
+  --text-secondary: #1a3a5c;
+  --text-tertiary: #5d7ebe;
+  --text-muted: #7995ca;
+
+  /* Border colors */
+  --border-primary: #e8edf5;
+  --border-secondary: #c5d1e8;
+  --border-focus: #1a3a5c;
+
+  /* Status colors */
+  --success: #00875a;
+  --success-bg: rgba(0, 135, 90, 0.1);
+  --danger: #de350b;
+  --danger-bg: rgba(222, 53, 11, 0.1);
+  --warning: #ff8b00;
+  --warning-bg: rgba(255, 139, 0, 0.1);
+  --info: #0052cc;
+  --info-bg: rgba(0, 82, 204, 0.1);
+
+  /* Chart colors */
+  --chart-green: #00875a;
+  --chart-red: #de350b;
+  --chart-green-bg: rgba(0, 135, 90, 0.3);
+  --chart-red-bg: rgba(222, 53, 11, 0.3);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+  /* Scrollbar */
+  --scrollbar-track: #f5f8fc;
+  --scrollbar-thumb: #c5d1e8;
+}

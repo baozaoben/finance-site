@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>财经日历 - FinView | 全球经济数据日程</title>
+  <meta name="description" content="专业财经日历，展示全球经济数据发布日程，包含事件星级、前值、预期值、公布值。">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/calendar.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo"><div class="logo-icon">FV</div><span>FinView</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link" data-page="home">首页</a>
+        <a href="/quotes.html" class="nav-link" data-page="quotes">行情</a>
+        <a href="/news.html" class="nav-link" data-page="news">新闻</a>
+        <a href="/calendar.html" class="nav-link active" data-page="calendar">财经日历</a>
+        <a href="/tools.html" class="nav-link" data-page="tools">交易工具</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Switch theme">☽</button>
+        <button class="mobile-menu-btn" aria-label="Open menu"><div class="hamburger"><span></span><span></span><span></span></div></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <div class="mobile-nav-links">
+        <a href="/" class="nav-link">首页</a>
+        <a href="/quotes.html" class="nav-link">行情</a>
+        <a href="/news.html" class="nav-link">新闻</a>
+        <a href="/calendar.html" class="nav-link active">财经日历</a>
+        <a href="/tools.html" class="nav-link">交易工具</a>
+        <a href="/about.html" class="nav-link">关于我们</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">财经日历</h1>
+        <p class="page-description">全球经济数据发布时间表，把握市场重要事件</p>
+      </div>
+
+      <!-- Date Range -->
+      <div class="calendar-date-nav">
+        <button class="btn btn-secondary btn-sm" id="prevWeek">◀ 上一周</button>
+        <span class="date-range" id="dateRange"></span>
+        <button class="btn btn-secondary btn-sm" id="nextWeek">下一周 ▶</button>
+        <button class="btn btn-secondary btn-sm" id="todayBtn">今天</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="calendar-filters">
+        <button class="filter-btn active" data-importance="all">全部</button>
+        <button class="filter-btn" data-importance="3">★★★ 重要</button>
+        <button class="filter-btn" data-importance="2">★★ 中等</button>
+        <button class="filter-btn" data-importance="1">★ 一般</button>
+      </div>
+
+      <div class="calendar-filters">
+        <button class="filter-btn active" data-country="all">全部国家</button>
+        <button class="filter-btn" data-country="US">🇺🇸 美国</button>
+        <button class="filter-btn" data-country="EU">🇪🇺 欧盟</button>
+        <button class="filter-btn" data-country="UK">🇬🇧 英国</button>
+        <button class="filter-btn" data-country="JP">🇯🇵 日本</button>
+        <button class="filter-btn" data-country="CN">🇨🇳 中国</button>
+        <button class="filter-btn" data-country="AU">🇦🇺 澳洲</button>
+        <button class="filter-btn" data-country="CA">🇨🇦 加拿大</button>
+      </div>
+
+      <!-- Calendar Table -->
+      <div class="calendar-table" id="calendarTable">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:80px;">时间</th>
+              <th style="width:50px;">国家</th>
+              <th>事件</th>
+              <th style="width:70px;">重要</th>
+              <th>前值</th>
+              <th>预测</th>
+              <th>公布</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody">
+            <!-- Filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 FinView. All rights reserved.</p>
+        <p>市场数据仅供参考，不构成投资建议。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { init as initTheme } from '/js/theme.js';
+    import { initMobileMenu, setActiveNav, formatDate, formatDateDisplay } from '/js/utils.js';
+    import { getEconomicCalendar } from '/js/api.js';
+
+    initTheme();
+    initMobileMenu();
+    setActiveNav('calendar');
+
+    let currentStart = getWeekStart(new Date());
+    let currentEnd = getWeekEnd(currentStart);
+    let currentImportance = 'all';
+    let currentCountry = 'all';
+    let allEvents = [];
+
+    // Date navigation
+    document.getElementById('prevWeek').addEventListener('click', () => {
+      currentStart.setDate(currentStart.getDate() - 7);
+      currentEnd = getWeekEnd(currentStart);
+      loadCalendar();
+    });
+
+    document.getElementById('nextWeek').addEventListener('click', () => {
+      currentStart.setDate(currentStart.getDate() + 7);
+      currentEnd = getWeekEnd(currentStart);
+      loadCalendar();
+    });
+
+    document.getElementById('todayBtn').addEventListener('click', () => {
+      currentStart = getWeekStart(new Date());
+      currentEnd = getWeekEnd(currentStart);
+      loadCalendar();
+    });
+
+    // Importance filter
+    document.querySelectorAll('[data-importance]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-importance]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentImportance = btn.dataset.importance;
+        renderCalendar();
+      });
+    });
+
+    // Country filter
+    document.querySelectorAll('[data-country]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-country]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCountry = btn.dataset.country;
+        renderCalendar();
+      });
+    });
+
+    function getWeekStart(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      d.setDate(d.getDate() - day);
+      return d;
+    }
+
+    function getWeekEnd(start) {
+      const d = new Date(start);
+      d.setDate(d.getDate() + 6);
+      return d;
+    }
+
+    function loadCalendar() {
+      document.getElementById('dateRange').textContent =
+        `${formatDateDisplay(currentStart)} - ${formatDateDisplay(currentEnd)}`;
+      allEvents = getEconomicCalendar(formatDate(currentStart), formatDate(currentEnd));
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const tbody = document.getElementById('calendarBody');
+      let events = allEvents;
+
+      if (currentImportance !== 'all') {
+        events = events.filter(e => e.importance === parseInt(currentImportance));
+      }
+
+      if (currentCountry !== 'all') {
+        events = events.filter(e => e.country === currentCountry);
+      }
+
+      if (!events.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state" style="padding:48px 0;">暂无符合条件的经济事件</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = events.map(evt => {
+        const actualClass = evt.actual !== null ? `actual ${parseFloat(evt.actual) > parseFloat(evt.forecast) ? 'high' : 'low'}` : 'actual';
+        return `
+          <tr>
+            <td style="font-weight:500;font-variant-numeric:tabular-nums;">${evt.time}</td>
+            <td><strong>${evt.country}</strong></td>
+            <td>${evt.event}</td>
+            <td>
+              <div class="importance-stars">
+                ${'<span class="star filled">★</span>'.repeat(evt.importance)}${'<span class="star">★</span>'.repeat(3 - evt.importance)}
+              </div>
+            </td>
+            <td class="value-cell">${evt.previous}</td>
+            <td class="value-cell">${evt.forecast}</td>
+            <td class="value-cell ${actualClass}">${evt.actual || '-'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    loadCalendar();
+  </script>
+</body>
+</html>

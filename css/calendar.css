@@ -1,0 +1,29 @@
+/* Calendar Page Styles */
+
+.calendar-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.date-range {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+@media (max-width: 639px) {
+  .calendar-date-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .calendar-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+}

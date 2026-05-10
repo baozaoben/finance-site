@@ -1,5 +1,4 @@
 // Quotes Manager - Real-time quote display and updates
-
 import { INSTRUMENTS, fetchAllPrices, formatQuote } from './api.js';
 import { getWatchlist, isInWatchlist, addToWatchlist, removeFromWatchlist } from './storage.js';
 
@@ -24,147 +23,108 @@ export function renderQuotes(containerId, symbols, priceData) {
     const quote = formatQuote(symbol, price);
     if (!quote) continue;
 
+    // 生成卡片，自动加上ID，方便实时更新
     const card = document.createElement('div');
     card.className = 'quote-card';
     card.dataset.symbol = symbol;
     card.id = `quote-${symbol}`;
 
     const isFav = isInWatchlist(symbol);
-    const changeClass = quote.change >= 0 ? 'up' : 'down';
-    const changeSign = quote.change >= 0 ? '+' : '';
+    const changeClass = quote.change >= 0 ? 'positive' : 'negative';
+    const changeIcon = quote.change >= 0 ? '↑' : '↓';
 
     card.innerHTML = `
       <div class="quote-header">
-        <div>
-          <div class="quote-symbol">${quote.name}</div>
-          <div class="quote-name">${quote.displayName}</div>
+        <div class="quote-info">
+          <h3 class="quote-symbol">${quote.symbol}</h3>
+          <p class="quote-name">${quote.name}</p>
         </div>
-        <button class="quote-favorite ${isFav ? 'active' : ''}" data-symbol="${symbol}" title="Add to watchlist">
-          ${isFav ? '\u2605' : '\u2606'}
+        <button class="quote-fav ${isFav ? 'active' : ''}" aria-label="Add to watchlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
         </button>
       </div>
-      <div class="quote-price" id="price-${symbol}">
-        ${quote.price.toFixed(quote.decimals)}
-      </div>
+      <div class="quote-price" id="price-${symbol}">${quote.price}</div>
       <div class="quote-change ${changeClass}" id="change-${symbol}">
-        <span class="change-points">${changeSign}${quote.change.toFixed(quote.decimals)}</span>
-        <span class="change-percent">${changeSign}${quote.changePercent.toFixed(2)}%</span>
+        ${changeIcon} ${Math.abs(quote.change).toFixed(2)}%
       </div>
-      <div class="quote-details">
-        <div class="quote-detail">
-          <span class="quote-detail-label">High</span>
-          <span class="quote-detail-value" id="high-${symbol}">-</span>
+      <div class="quote-stats">
+        <div class="stat">
+          <span class="label">High</span>
+          <span class="value">-</span>
         </div>
-        <div class="quote-detail">
-          <span class="quote-detail-label">Low</span>
-          <span class="quote-detail-value" id="low-${symbol}">-</span>
+        <div class="stat">
+          <span class="label">Low</span>
+          <span class="value">-</span>
         </div>
       </div>
     `;
 
-    // Click to navigate to detail
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.quote-favorite')) return;
-      window.location.href = `quotes.html?symbol=${symbol}`;
+    // 收藏按钮事件
+    const favBtn = card.querySelector('.quote-fav');
+    favBtn.addEventListener('click', () => {
+      if (isInWatchlist(symbol)) {
+        removeFromWatchlist(symbol);
+        favBtn.classList.remove('active');
+      } else {
+        addToWatchlist(symbol);
+        favBtn.classList.add('active');
+      }
     });
 
     container.appendChild(card);
   }
-
-  // Bind favorite buttons
-  container.querySelectorAll('.quote-favorite').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const sym = btn.dataset.symbol;
-      toggleFavorite(sym, btn);
-    });
-  });
 }
 
 /**
- * Toggle favorite status
- */
-function toggleFavorite(symbol, btn) {
-  if (isInWatchlist(symbol)) {
-    removeFromWatchlist(symbol);
-    btn.textContent = '\u2606';
-    btn.classList.remove('active');
-  } else {
-    addToWatchlist(symbol);
-    btn.textContent = '\u2605';
-    btn.classList.add('active');
-  }
-}
-
-/**
- * Update all displayed quotes with new data
+ * Update quote prices in real-time
  * @param {Object} priceData - New price data
  */
-export function updateQuotes(priceData) {
-  if (!priceData) return;
+export function updateQuotePrices(priceData) {
+  for (const symbol in priceData) {
+    const priceEl = document.getElementById(`price-${symbol}`);
+    const changeEl = document.getElementById(`change-${symbol}`);
+    const cardEl = document.getElementById(`quote-${symbol}`);
 
-  for (const symbol of Object.keys(priceData)) {
-    const quote = formatQuote(symbol, priceData[symbol]);
+    if (!priceEl || !changeEl || !cardEl) continue;
+
+    const price = priceData[symbol];
+    const quote = formatQuote(symbol, price);
     if (!quote) continue;
 
-    // Update price
-    const priceEl = document.getElementById(`price-${symbol}`);
-    if (priceEl) {
-      priceEl.textContent = quote.price.toFixed(quote.decimals);
-    }
+    // 更新价格和涨跌幅
+    priceEl.textContent = quote.price;
+    changeEl.textContent = `${quote.change >= 0 ? '↑' : '↓'} ${Math.abs(quote.change).toFixed(2)}%`;
 
-    // Update change
-    const changeEl = document.getElementById(`change-${symbol}`);
-    if (changeEl) {
-      const changeClass = quote.change >= 0 ? 'up' : 'down';
-      const changeSign = quote.change >= 0 ? '+' : '';
-      changeEl.className = `quote-change ${changeClass}`;
-      changeEl.innerHTML = `
-        <span class="change-points">${changeSign}${quote.change.toFixed(quote.decimals)}</span>
-        <span class="change-percent">${changeSign}${quote.changePercent.toFixed(2)}%</span>
-      `;
-    }
-
-    // Highlight significant moves
-    const card = document.getElementById(`quote-${symbol}`);
-    if (card && Math.abs(quote.changePercent) > 2) {
-      card.classList.add(quote.change >= 0 ? 'highlight-up' : 'highlight-down');
-      setTimeout(() => {
-        card.classList.remove('highlight-up', 'highlight-down');
-      }, 3000);
-    }
+    // 更新样式
+    changeEl.className = `quote-change ${quote.change >= 0 ? 'positive' : 'negative'}`;
+    cardEl.classList.add('updating');
+    setTimeout(() => cardEl.classList.remove('updating'), 500);
   }
 }
 
 /**
  * Start auto-refresh for quotes
- * @param {number} intervalMs - Refresh interval in milliseconds
- * @param {Function} onUpdate - Callback when data is fetched
+ * @param {number} interval - Refresh interval in ms
  */
-export function startAutoRefresh(intervalMs = 30000, onUpdate = null) {
-  stopAutoRefresh();
-
-  async function fetchAndUpdate() {
-    try {
-      const data = await fetchAllPrices();
-      updateQuotes(data);
-      if (onUpdate) onUpdate(data);
-    } catch (err) {
-      console.warn('Quote refresh failed:', err);
-    }
+export function startQuoteRefresh(interval = 30000) {
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
   }
 
-  // Initial fetch
-  fetchAndUpdate();
-
-  // Set interval
-  refreshInterval = setInterval(fetchAndUpdate, intervalMs);
+  refreshInterval = setInterval(async () => {
+    const newPrices = await fetchAllPrices();
+    if (newPrices) {
+      updateQuotePrices(newPrices);
+    }
+  }, interval);
 }
 
 /**
  * Stop auto-refresh
  */
-export function stopAutoRefresh() {
+export function stopQuoteRefresh() {
   if (refreshInterval) {
     clearInterval(refreshInterval);
     refreshInterval = null;
@@ -172,15 +132,27 @@ export function stopAutoRefresh() {
 }
 
 /**
- * Get all symbols for a category
- * @param {string} category - 'forex', 'metal', 'energy', 'crypto', or 'all'
- * @returns {string[]}
+ * Initialize quotes page
+ * @param {string} containerId - Quotes container ID
  */
-export function getSymbolsByCategory(category = 'all') {
-  if (category === 'all') {
-    return Object.keys(INSTRUMENTS);
+export async function initQuotesPage(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = '<div class="loading">Loading market data...</div>';
+
+  try {
+    const prices = await fetchAllPrices();
+    if (!prices) {
+      container.innerHTML = '<div class="error">Failed to load market data. Please try again later.</div>';
+      return;
+    }
+
+    const symbols = Object.keys(INSTRUMENTS);
+    renderQuotes(containerId, symbols, prices);
+    startQuoteRefresh();
+  } catch (error) {
+    console.error('Error initializing quotes:', error);
+    container.innerHTML = '<div class="error">Failed to load market data. Please try again later.</div>';
   }
-  return Object.entries(INSTRUMENTS)
-    .filter(([, config]) => config.category === category)
-    .map(([symbol]) => symbol);
 }

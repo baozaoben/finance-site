@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/homepage.css">
+  <!-- 走势图依赖 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- Header -->
@@ -399,5 +401,32 @@
     loadHomepage();
     startAutoRefresh(30000);
   </script>
+  <!-- 实时行情展示区 -->
+<div style="padding:15px;border:1px solid #eee;border-radius:8px;margin:15px 0;">
+  <h3>实时行情</h3>
+  <p>BTC比特币：<span id="btc-price">加载中...</span></p>
+  <p>24小时涨跌幅：<span id="btc-change">加载中...</span></p>
+  <p>ETH以太坊：<span id="eth-price">加载中...</span></p>
+</div>
+
+<!-- 实时走势图 -->
+<div style="padding:15px;border:1px solid #eee;border-radius:8px;margin:15px 0;">
+  <h3>实时价格走势</h3>
+  <div style="height:300px;">
+    <canvas id="realChart"></canvas>
+  </div>
+</div>
+
+<!-- 实时财经新闻 -->
+<div style="padding:15px;border:1px solid #eee;border-radius:8px;margin:15px 0;">
+  <h3>实时财经新闻</h3>
+  <div id="newsList">新闻加载中...</div>
+</div>
+
+<!-- 财经日历 -->
+<div style="padding:15px;border:1px solid #eee;border-radius:8px;margin:15px 0;">
+  <h3>财经重要日历</h3>
+  <div id="calendarList">日历加载中...</div>
+</div>
 </body>
 </html>
